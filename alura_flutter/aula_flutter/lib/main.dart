@@ -14,86 +14,95 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
+        primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-
-      home: Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: const Text(
+            "Tarefas",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        body: ListView(
           children: [
-            Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                Container(
-                  color: Colors.red,
-                  width: 100,
-                  height: 100,
-                ),
-                Container(
-                  color: Colors.blue,
-                  width: 50,
-                  height: 50,
-                ),
-              ],
-            ),
-            Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                Container(
-                  color: Colors.blue,
-                  width: 100,
-                  height: 100,
-                ),
-                Container(
-                  color: Colors.red,
-                  width: 50,
-                  height: 50,
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  color: Colors.cyan,
-                  width: 50,
-                  height: 50,
-                ),
-                Container(
-                  color: Colors.pinkAccent,
-                  width: 50,
-                  height: 50,
-                ),
-                Container(
-                  color: Colors.purple,
-                  width: 50,
-                  height: 50,
-                ),
-              ],
-            ),
+            Task('Aprender Flutter'),
+            Task('Andar de bike'),
+            Task('Meditar'),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(onPressed: () {}),
+      ),
+    );
+  }
+}
+
+class Task extends StatefulWidget {
+  final String nome;
+  const Task(this.nome, {super.key});
+
+  @override
+  State<Task> createState() => _TaskState();
+}
+
+class _TaskState extends State<Task> {
+int nivel = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Stack(
+          children: [
             Container(
-              color: Colors.amber,
-              width: 300,
-              height: 40,
-              child: const Text(
-                'Diamante Amarelo',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 28,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              color: Colors.blue,
+              height: 140,
             ),
-            ElevatedButton(
-              onPressed: () {
-                print("Você apertou o botão");
-              },
-              child: const Text("Aperte o botão"),
-            )
+            Column(
+              children: [
+                Container(
+                  color: Colors.white,
+                  height: 100,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        color: Colors.black26,
+                        width: 72,
+                        height: 100,
+                      ),
+                      Container(
+                          width: 200,
+                          child: Text(
+                            widget.nome,
+                            style: TextStyle(
+                                fontSize: 24, overflow: TextOverflow.ellipsis),
+                          )),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nivel++;
+                            });
+                            print(nivel);
+                          },
+                          style: const ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll<Color>(Colors.blue)),
+                          child: Icon(
+                            Icons.arrow_drop_up,
+                            color: Colors.white,
+                          ))
+                    ],
+                  ),
+                ),
+                Text(
+                  'Nível: $nivel',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )
+              ],
+            ),
           ],
         ),
       ),
